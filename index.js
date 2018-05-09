@@ -19,6 +19,6 @@ app.use('/permission/',permissionRouter());
 
 app.use(errorHandler.errorHandler());
 
-app.listen(8081,function(){
+app.listen(process.env.PORT || 8081,function(){
     console.log("Ứng dụng OrderFood đang lắng nghe tại địa chỉ..");
 })
