@@ -36,3 +36,55 @@ function createPermission(req,res,next){
         next(err);
     })
 }
+function updatePermission(req,res,next){
+    var permissionId = req.params.permissionId;
+    var permissionModel = req.body;  
+    if(!permissionId){
+        next("Không tìm thấy");
+    }else{
+        permissionDao.updateById(permissionId,permissionModel)
+        .then(function(err,result){
+            if(err){
+                res.send(err);
+            }else{
+                res.send(result);
+            }
+        })
+        .catch(function(err){
+            next(err);
+        });
+    }
+}
+function removePermission(req,res,next){
+    var permissionId = req.params.permissionId;
+    if(!permissionId){
+        next("Không tìm thấy");
+    }else{
+        permissionDao.deleteById(permissionId)
+        .then(function(err,result){
+            if(err){
+                res.send(err);
+            }else{
+                res.send(result);
+            }
+        })
+        .catch(function(err){
+            next(err);
+        });
+    }
+}
+function paginatePermission(req,res,next){
+    var query = req.query;
+    var page = query.page;
+    var limit = query.limit;
+    var skip = page>1?(page-1)*limit:0;
+    var sortBy = query.sortBy;
+    var isDes = query.isDes?true:false;
+    permissionDao.findAll({},parseInt(skip),parseInt(limit),"",sortBy,isDes)
+    .then(function (permissions){
+        res.send(permissions);
+    })
+    .catch(function(err){
+        next(err);
+    });
+}
