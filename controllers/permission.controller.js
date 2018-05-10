@@ -6,7 +6,10 @@ var crypto = require('./../utils/crypto');
 var Permission = require('../models/permission.model');
 
 module.exports = {
-    createPermission: createPermission
+    createPermission: createPermission,
+    updatePermission: updatePermission,
+    removePermission: removePermission,
+    paginatePermission: paginatePermission
 }
 function validatePermissionModel(permissionModel){
     var errors = [];
