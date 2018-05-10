@@ -27,7 +27,7 @@ function findAll(condition, _skip, _limit, _projection, _sortBy, isDes) {
     var sortBy = _sortBy;
     var where = condition ? condition : {};
     return new Promise(function (resolve, reject) {
-        User.find(where)
+        Permission.find(where)
             .limit(limit)
             .sort(sort)
             .select(_projection)
