@@ -8,17 +8,19 @@ var authRouter = require('./routes/auth.route');
 var permissionRouter = require('./routes/permission.route');
 var errorHandler = require('./middle-ware/error-handler');
 var db = require('./config/db').dbConnect();
+var serverConfig = require('./config/server');
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+app.use(express.static('doc'));
 
-app.use('/users/', userRouter());
-app.use('/auths/',authRouter());
-app.use('/permission/',permissionRouter());
+app.use(serverConfig.baseUrl + '/users', userRouter());
+app.use(serverConfig.baseUrl + '/auths', authRouter());
+app.use(serverConfig.baseUrl + '/permission',permissionRouter());
 
 app.use(errorHandler.errorHandler());
 
-app.listen(process.env.PORT || 8081,function(){
+app.listen(serverConfig.port,function(){
     console.log("Ứng dụng OrderFood đang lắng nghe tại địa chỉ..");
 })

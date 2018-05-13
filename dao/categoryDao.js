@@ -1,4 +1,4 @@
-var User = require('./../models/user.model');
+var Category = require('../models/category.model');
 
 module.exports = {
     createUser: createUser,
@@ -11,13 +11,13 @@ module.exports = {
     groupByAndTotal: groupByAndTotal
 }
 
-function createUser(model){
-    var user = new User(model);
-    return user.save();
+function createCategory(model){
+    var category = new Category(model);
+    return category.save();
 }
 function findById(id) {
     {
-        return User.findById(id);
+        return Category.findById(id);
     }
 }
 function findAll(condition, _skip, _limit, _projection, _sortBy, isDes) {
@@ -28,11 +28,10 @@ function findAll(condition, _skip, _limit, _projection, _sortBy, isDes) {
     var sortBy = _sortBy;
     var where = condition ? condition : {};
     return new Promise(function (resolve, reject) {
-        User.find(where)
+        Category.find(where)
             .limit(limit)
             .sort(sort)
             .select(_projection)
-            .populate('permission','permissionId permissionName')
             .exec(function (err, result) {
                 if (err) {
                     reject(err);
@@ -44,26 +43,26 @@ function findAll(condition, _skip, _limit, _projection, _sortBy, isDes) {
 }
 
 function findOne(condition, projection) {
-    return User.findOne(condition, projection); // projection : 'name ...'
+    return Category.findOne(condition, projection); // projection : 'name ...'
 }
-function updateById(id, userModel) {
-    return User.findByIdAndUpdate(id, userModel);
+function updateById(id, categoryModel) {
+    return Category.findByIdAndUpdate(id, categoryModel);
 }
-function updateByCondition(condition, userModel) {
-    return User.findOneAndUpdate(condition, userModel);
+function updateByCondition(condition, categoryModel) {
+    return Category.findOneAndUpdate(condition, categoryModel);
 }
 
 function deleteById(id) {
-    return User.findByIdAndRemove(id);
+    return Category.findByIdAndRemove(id);
 }
 function count(condition) {
     if (condition) {
         return count(condition);
     }
-    return User.count({});
+    return Category.count({});
 }
 function groupByAndTotal(groupBy){
-    return User.aggregate([
+    return Category.aggregate([
         {$group:{ _id: '$'+groupBy,total: {$sum: '$age'}},
     }]);
 }
